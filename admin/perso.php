@@ -16,7 +16,7 @@
         if(!$donSearch = $search->fetch())
         {
             $search->closeCursor();
-            header("LOCATION:product.php");
+            header("LOCATION:perso.php");
         }
         $search->closeCursor();
         unlink("../images/upload".$donSearch['image']);

@@ -88,6 +88,7 @@
         </thead>
         <tbody>
             <?php
+                /* Si on vient de supprimer un personnage ( et qu'on click sur supprimer les images de la galerie) on affiche uniquement les informations relatives au personnage supprimé */
                 if(isset($_GET['suppid'])){
                     $req = $bdd->prepare("SELECT * FROM galerie WHERE idPerso=?");
                     $id = $_GET['suppid'];
@@ -104,6 +105,7 @@
                     }
                     $req->closeCursor();
                 }else{
+                    /* sinon on affiche toutes les informations de la galerie */
                     $req = $bdd->query("SELECT * FROM galerie");
                     while($don = $req->fetch())
                     {
