@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Marcellus+SC&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+}
+
+.slide{
+    width:100%;
+    min-height:100vh;
+    position: relative;
+}
+
+header{
+    width:100%;
+    height:100px;
+    background-color: #191919;
+
+    .wrapper{
+        width:90%;
+        margin:0 auto;
+        display: flex;
+        justify-content: space-between;
+
+         nav{
+            width:50%;
+            height:100%;
+            display: flex;
+            justify-content: flex-end;
+
+            @media all and (max-width:1550px)
+            {
+                width:80%;
+            }
+            @media all and (max-width:1200px)
+            {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+            }
+
+            ul{
+                list-style:none;
+                width:100%;
+                display: flex;
+                @media all and (max-width:1200px)
+                {
+                    display: none;
+                }
+
+                li{
+                    flex:1;
+                    text-align: center;
+
+                    a{
+                        text-decoration: none;
+                        color: #ffad01;
+                        line-height: 100px;
+                        font-size: 26px;
+                        font-family: 'Marcellus SC', serif;
+
+                        &:hover{
+                            text-decoration: underline ;
+                        }
+                    }
+                }
+            }
+        }
+        #burger{
+                width: 50px;
+                margin-right: 15px;
+                cursor: pointer;
+                display: none;
+                align-self: center;
+                @media all and (max-width:1000px)
+                {
+                    display: block;
+                }
+                /* Barre du menu burger */
+                .bar{
+                    transition: all 0.5s;
+                    width: 100%;
+                    height: 3px;
+                    background-color: white;
+                    margin-bottom: 8px;
+                }
+            }
+    }
+}
+
+#home{
+    background-color: #191919;
+    
+    .logoH{
+        display: flex;
+        flex-direction: column;
+
+
+        @keyframes rotate{
+            0%{
+                transform: perspective(600px) rotateY(180deg);
+            }
+            100%{
+                transform:perspective(600px) rotateY(0deg);
+            }
+        }
+        @keyframes opacity{
+            0%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+        #dragon{
+            margin:0 auto;
+            transform: perspective(600px) (180deg);
+            animation-name: rotate;
+            animation-duration: 5s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            transform-style: preserve-3d;
+            @media all and (max-width:800px)
+            {
+                width:80%;
+            }
+        }
+        #logo{
+            position: absolute;
+            top:80%;
+            left:50%;
+            opacity: 0;
+            transform: translate(-50%,-80%);
+            animation-name: opacity;
+            animation-delay: 5s;
+            animation-duration: 3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+            @media all and (max-width:800px)
+            {
+                width:80%;
+            }
+        }   
+    }
+}
+
+#pres{
+    background-color: #fdfdec;
+    display: flex;
+
+    @media all and (max-width:1600px)
+    {
+        flex-direction: column;
+    }
+
+    .gifA{
+        width:40%;
+        background-image: url(../images/scorpion.gif);
+        background-position: center center;
+        background-size: cover;
+
+        @media all and (max-width:1600px)
+        {
+            width:100%;
+            height:50vh;
+        }
+    }
+
+    .presH{
+        width:60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        @media all and (max-width:1600px)
+        {
+            width:100%;
+        }
+       
+        .texte{
+            width:80%;
+            margin: 10px auto;
+            font-family: 'Marcellus SC', serif;
+
+            h3{
+                font-size: 30px;
+                margin:20px 0;
+            }
+            p{
+                font-size: 18px;
+                margin:10px 0;
+            }
+        }
+    }
+}
+
+.blockP{
+    width:100%;
+    height:200px;
+    background-image: url(../images/wall.jpeg);
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    border-top: solid 8px #ffad01;
+    border-bottom:  solid 8px #ffad01;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    h4{
+        font-size: 5em;
+        color: #ffad01;
+        font-family: 'Marcellus SC', serif;
+        text-shadow: 0px 0px 2px black;
+    }
+}
+
+#perso{
+    display: flex;
+    flex-wrap: wrap;
+
+    .perso{
+        width: 25%;
+        height:500px;
+        position: relative;
+        text-align: center;
+
+        @media all and (max-width:1350px){
+            width:50%;
+        }
+        @media all and (max-width:700px){
+            width:100%;
+        }
+
+        &:hover h5{
+            opacity: 1;
+        }
+
+        &:hover img{
+            filter: grayscale(0);
+        }
+ 
+        img{
+        width:100%;
+        height:100%;
+        object-fit: cover;
+        filter:grayscale(100%);
+        transition: all ease-in-out 0.4s;
+        }
+
+        h5{
+            position: absolute;
+            top:50%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            transition: all 0.8s;
+            font-size: 6em;
+            color: #ffad01;
+            font-family: 'Marcellus SC', serif;
+            text-shadow: 0px 0px 2px black;
+            opacity: 0;
+            font-weight: 400;
+
+            @media all and (max-width:1650px){
+                font-size: 5em;
+            }
+        }
+    }
+}
+
+#galerie{
+    background-color: #191919;
+
+    .wrapper{
+        width:90%;
+        margin:0 auto;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+
+        @media all and (max-width:1500px)
+        {
+            grid-template-columns: 1fr 1fr;
+        }
+        @media all and (max-width:950px)
+        {
+            grid-template-columns: 1fr;
+        }
+        
+
+        .perso{
+            border: solid 8px #ffad01;
+            width:400px;
+            height:300px;
+            margin-top:75px;
+            justify-self: center;
+            position: relative;
+            &:hover img{
+              filter:brightness(50%)
+            }
+            &:hover h5,&:hover h6{
+                opacity: 1;
+            }
+            img{
+                width:100%;
+                height:100%;
+                object-fit: cover;
+                transition: all ease-in-out 0.4s;
+            }
+            a{
+                position: absolute;
+                top:10%;
+                left:50%;
+                transform: translate(-50%,-50%);
+                text-decoration: none;
+
+                &:hover h5{
+                    color:white;
+                }
+
+                h5{
+                    font-size:2em;
+                    color: #ffad01;
+                    font-family: 'Marcellus SC', serif;
+                    text-shadow: 0px 0px 2px black;
+                    opacity: 0;
+                    transition: opacity ease-in-out 0.4s;
+                    font-weight: 400;
+                }
+            }
+            
+            h6{
+                position: absolute;
+                top:50%;
+                left:50%;
+                transform: translate(-50%,-50%);
+                font-size:2em;
+                color: white;
+                font-family: 'Marcellus SC', serif;
+                text-shadow: 0px 0px 2px black;
+                opacity: 0;
+                transition: all ease-in-out 0.4s;
+                font-weight: 400;
+            }
+        }
+    }
+}
+#contact{
+    display: flex;
+    @media all and (max-width:1500px)
+    {
+        flex-direction: column;
+    }
+    .contact{
+        width:60%;
+        background-color: #fdfdec;
+
+        @media all and (max-width:1500px)
+        {
+            width:100%;
+        }
+        
+        .wrapper{
+            width:80%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            min-height:100vh;
+
+            h4{
+                font-size: 2em;
+                font-family: 'Marcellus SC', serif;
+                font-weight: 400;
+            }
+
+            .form-group{
+                margin: 30px 0;
+                @media all and (max-width:1500px)
+                {
+                    text-align: center;
+                }
+
+                label{
+                    font-size: 2em;
+                    font-family: 'Marcellus SC', serif;
+                    
+                    @media all and (max-width:850px)
+                    {
+                        display: block;
+                    }
+                }
+                input{
+                    width:40%;
+                    height:40px;
+                    font-size: 2em;
+                }
+                textarea{
+                    width:75%;
+                    height:300px;
+                    resize: none;
+                    font-size: 2em;
+                }
+                & label[for=name]
+                {
+                    margin-right: 42px;
+                }
+                & label[for=email]
+                {
+                    margin-right: 32px;
+                }
+                & label[for=message]
+                {
+                    display: block;
+                }
+                & input[type=submit]{
+                    width:fit-content;
+                    font-size: 2em;
+                }
+            }
+        }
+    }
+    .gifA{
+        width:40%;
+        background-image: url(../images/contact.gif);
+        background-position: center center;
+        background-size: cover;
+
+        
+        @media all and (max-width:1500px)
+        {
+            width:100%;
+        }
+    }
+}
+footer{
+    width:100%;
+    height:100px;
+    background-color: #191919;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: solid 8px #ffad01;
+    color: #ffad01;
+    font-size: 1em;
+    font-family: 'Marcellus SC', serif;
+}
+
+/* Perso.php */
+
+#descriptionP{
+    background-color: #191919;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h3{
+        margin: 50px 0;
+        font-size: 4em;
+        font-weight: 400;
+        font-family: 'Marcellus SC', serif;
+        color: #ffad01;
+    }
+    img{
+        width:600px;
+        height:600px;
+        object-fit: cover;
+    }
+    .text{
+        width:80%;
+        margin: 50px auto;
+        font-size: 1.2em;
+        font-family: 'Marcellus SC', serif;
+        color:white;
+        text-align: left;
+    }
+    /* Bouton Retour */
+    a{
+        background-color: #ffad01;
+        color:white;
+        width:100px;
+        height:50px;
+        text-align: center;
+        line-height: 50px;
+        font-family: 'Marcellus SC', serif;
+        text-decoration: none;
+    }
+}
