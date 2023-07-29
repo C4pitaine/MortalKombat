@@ -54,6 +54,7 @@
         if(isset($_GET['deletesuccess']))
         {
             echo "<div class='alert alert-danger'>Le personnage n°".$_GET['deletesuccess']." a bien été supprimé</div>";
+            echo "<a href='galerie.php?suppid=".$_GET['deletesuccess']."' class='btn btn-danger'>Supprimer les images de la galerie</a>";
         }
     ?>
     <table class="table table-striped">

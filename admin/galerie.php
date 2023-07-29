@@ -6,7 +6,7 @@
         header("LOCATION:index.php");
     }
     require "../connexion.php";
-
+    /* si on supprime à la main une par une */
     if(isset($_GET['delete']))
     {
         $id = htmlspecialchars($_GET['delete']);
@@ -16,7 +16,7 @@
         if(!$donSearch = $search->fetch())
         {
             $search->closeCursor();
-            header("LOCATION:product.php");
+            header("LOCATION:perso.php");
         }
         $search->closeCursor();
         unlink("../images/upload".$donSearch['fichier']);
@@ -24,6 +24,24 @@
         $delete->execute([$id]);
         $delete->closeCursor();
         header("LOCATION:galerie.php?deletesuccess=".$id);
+    }
+    /* si on veut supprimer toutes les images de la galerie d'un personnage */
+    if(isset($_GET['deleteAll'])){
+        $idPerso = htmlspecialchars($_GET['deleteAll']);
+
+        $search = $bdd->prepare("SELECT * FROM galerie WHERE idPerso=?");
+        $search->execute([$idPerso]);
+        if(!$donSearch = $search->fetch())
+        {
+            $search->closeCursor();
+            header("LOCATION:perso.php");
+        }
+        $search->closeCursor();
+        unlink("../images/upload".$donSearch['fichier']);
+        $delete = $bdd->prepare("DELETE FROM galerie WHERE idPerso=?");
+        $delete->execute([$idPerso]);
+        $delete->closeCursor();
+        header("LOCATION:galerie.php?deletesuccessAll=".$idPerso);
     }
 
 ?>
@@ -55,6 +73,10 @@
         {
             echo "<div class='alert alert-danger'>L'image n°".$_GET['deletesuccess']." de la galerie a bien été supprimé</div>";
         }
+        if(isset($_GET['deletesuccessAll']))
+        {
+            echo "<div class='alert alert-danger'>Les images de la galerie du personnage n°".$_GET['deletesuccessAll']." ont bien été supprimées</div>";
+        }
     ?>
     <table class="table table-striped">
         <thead>
@@ -66,17 +88,35 @@
         </thead>
         <tbody>
             <?php
-                $req = $bdd->query("SELECT * FROM galerie");
-                while($don = $req->fetch())
-                {
-                    echo "<tr>";
-                        echo "<td>".$don['id']."</td>";
-                        echo "<td>".$don['idPerso']."</td>";
-                        echo "<td>";
-                            echo "<a href='updateGalerie.php?id=".$don['id']."' class='btn btn-warning my-2 mx-2'>Modifier</a>";
-                            echo "<a href='galerie.php?delete=".$don['id']."' class='btn btn-danger my-2 mx-2'>Supprimer</a>";
-                        echo "</td>";
-                    echo "</tr>";
+                if(isset($_GET['suppid'])){
+                    $req = $bdd->prepare("SELECT * FROM galerie WHERE idPerso=?");
+                    $id = $_GET['suppid'];
+                    $req->execute([$id]);
+                    while($don = $req->fetch())
+                    {
+                        echo "<tr>";
+                            echo "<td>".$don['id']."</td>";
+                            echo "<td>".$don['idPerso']."</td>";
+                            echo "<td>";
+                                echo "<a href='galerie.php?deleteAll=".$don['idPerso']."' class='btn btn-danger my-2 mx-2'>Supprimer</a>";
+                            echo "</td>";
+                        echo "</tr>";
+                    }
+                    $req->closeCursor();
+                }else{
+                    $req = $bdd->query("SELECT * FROM galerie");
+                    while($don = $req->fetch())
+                    {
+                        echo "<tr>";
+                            echo "<td>".$don['id']."</td>";
+                            echo "<td>".$don['idPerso']."</td>";
+                            echo "<td>";
+                                echo "<a href='updateGalerie.php?id=".$don['id']."' class='btn btn-warning my-2 mx-2'>Modifier</a>";
+                                echo "<a href='galerie.php?delete=".$don['id']."' class='btn btn-danger my-2 mx-2'>Supprimer</a>";
+                            echo "</td>";
+                        echo "</tr>";
+                    }
+                    $req->closeCursor();
                 }
             ?>
         </tbody>
