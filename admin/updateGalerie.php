@@ -51,6 +51,16 @@
                 </div>
                 <input type="file" name="fichier" id="fichier" class="from-control">
             </div>
+            <?php   
+            /*on regarde si il y a la présence du modifyid pour demander si la personne veut modifier d'autre image du même perso ( on affichera alors à nouveau uniquement les informations de ce personnage */
+                if(isset($_GET['modifyid']))
+                {
+                    echo "<div class='form-group'>";
+                    echo "<label for='check'>Voulez vous modifier d'autres images de ce perso: </label>";
+                        echo "<input type='checkbox' name='check' id='check' class='form-check'>";
+                    echo "</div>";
+                }
+            ?>
             <div class="form-group my-3">
                 <input type="submit" value="Modifier" class="btn btn-success">
             </div>

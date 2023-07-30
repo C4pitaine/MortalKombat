@@ -39,9 +39,9 @@
             $insert->closeCursor();
             header("LOCATION:index.php");
         }else{
-            header("LOCATION:index.php");
+            header("LOCATION:index.php#contact");
         }
     }else{
-        header("LOCATION:index.php");
+        header("LOCATION:index.php#contact");
     }
 ?>

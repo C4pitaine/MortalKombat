@@ -50,6 +50,7 @@
         if(isset($_GET['update']))
         {
             echo "<div class='alert alert-warning'>Le personnage n°".$_GET['update']." a été mis à jour</div>";
+            echo "<a href='galerie.php?modifyid=".$_GET['update']."' class='btn btn-warning'>Modifier les images de la galerie</a>";
         }
         if(isset($_GET['deletesuccess']))
         {

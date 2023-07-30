@@ -43,7 +43,14 @@
                     ":myid" => $id
                 ]);
                 $update->closeCursor();
-                header("LOCATION:galerie.php?update=".$id);
+                /* on vérifie si la checkbox ( pour changer d'autre image d'un même perso est coché et on renvoit à la galerie avec l'id du perso si c'est le cas) */
+                if(isset($_POST['check']))
+                {
+                    header("LOCATION:galerie.php?update=".$id."&modifyid=".$idperso);
+                }else{
+                    header("LOCATION:galerie.php?update=".$id);
+                }
+                
             }else{
 
                 $dossier = '../images/upload/';
@@ -81,7 +88,13 @@
                             ":myid" => $id
                         ]);
                         $update->closeCursor();
-                        header("LOCATION:galerie.php?update=".$id);
+                        /* on vérifie si la checkbox ( pour changer d'autre image d'un même perso est coché et on renvoit à la galerie avec l'id du perso si c'est le cas) */
+                        if(isset($_POST['check']))
+                        {
+                            header("LOCATION:galerie.php?update=".$id."&modifyid=".$idperso);
+                        }else{
+                            header("LOCATION:galerie.php?update=".$id);
+                        }
                     }
                 }else{
                     header("LOCATION:updateGalerie.php?id=".$id."$&error=".$err);

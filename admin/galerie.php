@@ -104,7 +104,25 @@
                         echo "</tr>";
                     }
                     $req->closeCursor();
-                }else{
+                }
+                /* si on vient de mofidier un personnage on affiche les informations du personnage modifié*/
+                if(isset($_GET['modifyid'])){
+                    $req = $bdd->prepare("SELECT * FROM galerie WHERE idPerso=?");
+                    $id = $_GET['modifyid'];
+                    $req->execute([$id]);
+                    while($don = $req->fetch())
+                    {
+                        echo "<tr>";
+                            echo "<td>".$don['id']."</td>";
+                            echo "<td>".$don['idPerso']."</td>";
+                            echo "<td>";
+                                echo "<a href='updateGalerie.php?id=".$don['id']."&modifyid=".$don['idPerso']."' class='btn btn-warning my-2 mx-2'>Modifier</a>";
+                            echo "</td>";
+                        echo "</tr>";
+                    }
+                    $req->closeCursor();        
+                }
+                if(!isset($_GET['suppid']) && !isset($_GET['modifyid'])){
                     /* sinon on affiche toutes les informations de la galerie */
                     $req = $bdd->query("SELECT * FROM galerie");
                     while($don = $req->fetch())
