@@ -10,6 +10,8 @@
     if(isset($_GET['delete']))
     {
         $id = htmlspecialchars($_GET['delete']);
+        $idName = htmlspecialchars($_GET['deleteName']);
+        
 
         $search = $bdd->prepare("SELECT * FROM personnages WHERE id=?");
         $search->execute([$id]);
@@ -23,7 +25,8 @@
         $delete = $bdd->prepare("DELETE FROM personnages WHERE id=?");
         $delete->execute([$id]);
         $delete->closeCursor();
-        header("LOCATION:perso.php?deletesuccess=".$id);
+        header("LOCATION:perso.php?deletesuccess=".$id."&deletesuccessName=".$idName);
+        
     }
 
 ?>
@@ -54,8 +57,8 @@
         }
         if(isset($_GET['deletesuccess']))
         {
-            echo "<div class='alert alert-danger'>Le personnage n°".$_GET['deletesuccess']." a bien été supprimé</div>";
-            echo "<a href='galerie.php?suppid=".$_GET['deletesuccess']."' class='btn btn-danger'>Supprimer les images de la galerie</a>";
+            echo "<div class='alert alert-danger'>Le personnage ".$_GET['deletesuccessName']." a bien été supprimé</div>";
+            echo "<a href='galerie.php?suppid=".$_GET['deletesuccess']."&suppName=".$_GET['deletesuccessName']."' class='btn btn-danger'>Supprimer les images de la galerie</a>";
         }
     ?>
     <table class="table table-striped">
@@ -78,7 +81,7 @@
                         echo "<td>".$don['description']."</td>";
                         echo "<td>";
                             echo "<a href='updatePerso.php?id=".$don['id']."' class='btn btn-warning my-2'>Modifier</a>";
-                            echo "<a href='perso.php?delete=".$don['id']."' class='btn btn-danger my-2'>Supprimer</a>";
+                            echo "<a href='perso.php?delete=".$don['id']."&deleteName=".$don['name']."' class='btn btn-danger my-2'>Supprimer</a>";
                         echo "</td>";
                     echo "</tr>";
                 }

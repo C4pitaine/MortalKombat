@@ -9,12 +9,14 @@
     if(isset($_GET['id']))
     {
         $id = htmlspecialchars($_GET['id']);
+        /* on assigne la valeur de l'id pour la réutiliser dans le traitement */
+        $idPers = htmlspecialchars($_GET['id']);
     }else{
         header("LOCATION:index.php");
     }
 
     require "../connexion.php";
-    $req = $bdd->prepare("SELECT * FROM galerie WHERE id=?");
+    $req = $bdd->prepare("SELECT galerie.*,personnages.name,personnages.id FROM galerie INNER JOIN personnages ON galerie.idPerso=personnages.id WHERE galerie.id=?");
     $req->execute([$id]);
     if(!$don = $req->fetch())
     {
@@ -36,12 +38,9 @@
 <body>
     <div class="container">
        <h2>Modifier une image de La galerie</h2>
-       <form action="treatmentUpdateGalerie.php?id=<?= $don['id'] ?>" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="id" value="<?= $don['id'] ?>">
-            <div class="form-group my-3">
-                <label for="idPerso">IdPerso: </label>
-                <input type="text" name="idPerso" id="idPerso" value="<?= $don['idPerso'] ?>" class="form-control">
-            </div>
+        <!-- On envoit dans le traitement l'idPers sauvegarder pour ne pas avoir une erreur entre les différents id des différentes tables  -->
+       <form action="treatmentUpdateGalerie.php?id=<?= $idPers ?>" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="<?= $idPers ?>">
             <div class="form-group my-3">
                 <label for="fichier">Fichier: </label>
                 <div class="row">
@@ -61,6 +60,21 @@
                     echo "</div>";
                 }
             ?>
+            <div class="form-group my-3">
+                <label for="name">Name: </label>
+                <select name="name" id="name">
+                    <option value="<?= $don['id'] ?>"><?=$don['name']?></option>
+                    <?php
+                        require "../connexion.php";
+                        $req = $bdd->query("SELECT * FROM personnages");
+                        while($don = $req->fetch())
+                        {
+                            echo "<option value=".$don['id'].">".$don['name']."</option>";
+                        }
+                        $req->closeCursor();
+                    ?>
+                </select>
+            </div>
             <div class="form-group my-3">
                 <input type="submit" value="Modifier" class="btn btn-success">
             </div>

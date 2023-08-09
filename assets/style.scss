@@ -222,7 +222,7 @@ header{
 
     .perso{
         width: 25%;
-        height:500px;
+        height:50vh;
         position: relative;
         text-align: center;
 
@@ -271,6 +271,7 @@ header{
 
 #galerie{
     background-color: #191919;
+    padding-bottom: 10px;
 
     .wrapper{
         width:90%;
@@ -417,6 +418,21 @@ header{
                     width:fit-content;
                     font-size: 2em;
                 }
+            }
+
+            .sendfail{
+                width:fit-content;
+                padding: 10px;
+                background-color: rgb(255, 0, 0,20%);
+                color: red;
+                font-size: 2em;
+            }
+            .sendsuccess{
+                width:fit-content;
+                padding: 10px;
+                background-color: rgba(0, 128, 0,20%);
+                color: rgb(0, 128, 0);
+                font-size: 2em;
             }
         }
     }

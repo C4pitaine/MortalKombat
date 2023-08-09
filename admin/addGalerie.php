@@ -19,10 +19,24 @@
 <body>
     <div class="container">
        <h2>Ajouter une image dans la galerie</h2>
+       <?php
+            if(isset($_GET['error'])){
+                echo "<div class='alert alert-danger'>Veuillez remplir tout les champs</div>";
+            }
+       ?>
        <form action="treatmentAddGalerie.php" method="POST" enctype="multipart/form-data">
             <div class="form-group my-3">
-                <label for="idPerso">IdPerso: </label>
-                <input type="text" name="idPerso" id="idPerso" value="" class="form-control">
+                <label for="name">Name: </label>
+                <select name="name" id="name">
+                    <?php
+                        require "../connexion.php";
+                        $req = $bdd->query("SELECT * FROM personnages");
+                        while($don = $req->fetch())
+                        {
+                            echo "<option value=".$don['id'].">".$don['name']."</option>";
+                        }
+                    ?>
+                </select>
             </div>
             <div class="form-group my-3">
                 <label for="fichier">Fichier: </label>

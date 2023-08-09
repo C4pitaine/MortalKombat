@@ -28,6 +28,9 @@
     /* si on veut supprimer toutes les images de la galerie d'un personnage */
     if(isset($_GET['deleteAll'])){
         $idPerso = htmlspecialchars($_GET['deleteAll']);
+        if(isset($_GET['deleteAllname'])){
+            $idName = $_GET['deleteAllname'];
+        }
 
         $search = $bdd->prepare("SELECT * FROM galerie WHERE idPerso=?");
         $search->execute([$idPerso]);
@@ -41,7 +44,7 @@
         $delete = $bdd->prepare("DELETE FROM galerie WHERE idPerso=?");
         $delete->execute([$idPerso]);
         $delete->closeCursor();
-        header("LOCATION:galerie.php?deletesuccessAll=".$idPerso);
+        header("LOCATION:galerie.php?deletesuccessAll=".$idName);
     }
 
 ?>
@@ -75,14 +78,14 @@
         }
         if(isset($_GET['deletesuccessAll']))
         {
-            echo "<div class='alert alert-danger'>Les images de la galerie du personnage n°".$_GET['deletesuccessAll']." ont bien été supprimées</div>";
+            echo "<div class='alert alert-danger'>Les images de la galerie du personnage ".$_GET['deletesuccessAll']." ont bien été supprimées</div>";
         }
     ?>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>IdPerso</th>
+                <th>Name</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -90,16 +93,19 @@
             <?php
                 /* Si on vient de supprimer un personnage ( et qu'on click sur supprimer les images de la galerie) on affiche uniquement les informations relatives au personnage supprimé */
                 if(isset($_GET['suppid'])){
-                    $req = $bdd->prepare("SELECT * FROM galerie WHERE idPerso=?");
+                    $req = $bdd->prepare("SELECT galerie.id,galerie.idPerso,personnages.name FROM galerie LEFT JOIN personnages ON galerie.idPerso=personnages.id WHERE galerie.idPerso=?");
                     $id = $_GET['suppid'];
+                    if(isset($_GET['suppName'])){
+                        $namesupp = $_GET['suppName'];
+                    }
                     $req->execute([$id]);
                     while($don = $req->fetch())
                     {
                         echo "<tr>";
                             echo "<td>".$don['id']."</td>";
-                            echo "<td>".$don['idPerso']."</td>";
+                            echo "<td>".$namesupp."</td>";
                             echo "<td>";
-                                echo "<a href='galerie.php?deleteAll=".$don['idPerso']."' class='btn btn-danger my-2 mx-2'>Supprimer</a>";
+                                echo "<a href='galerie.php?deleteAll=".$don['idPerso']."&deleteAllname=".$namesupp."' class='btn btn-danger my-2 mx-2'>Supprimer</a>";
                             echo "</td>";
                         echo "</tr>";
                     }
@@ -107,14 +113,14 @@
                 }
                 /* si on vient de mofidier un personnage on affiche les informations du personnage modifié*/
                 if(isset($_GET['modifyid'])){
-                    $req = $bdd->prepare("SELECT * FROM galerie WHERE idPerso=?");
+                    $req = $bdd->prepare("SELECT galerie.id,galerie.idPerso,galerie.fichier,personnages.name FROM galerie INNER JOIN personnages ON galerie.idPerso=personnages.id WHERE galerie.idPerso=?");
                     $id = $_GET['modifyid'];
                     $req->execute([$id]);
                     while($don = $req->fetch())
                     {
                         echo "<tr>";
                             echo "<td>".$don['id']."</td>";
-                            echo "<td>".$don['idPerso']."</td>";
+                            echo "<td>".$don['name']."</td>";
                             echo "<td>";
                                 echo "<a href='updateGalerie.php?id=".$don['id']."&modifyid=".$don['idPerso']."' class='btn btn-warning my-2 mx-2'>Modifier</a>";
                             echo "</td>";
@@ -124,12 +130,12 @@
                 }
                 if(!isset($_GET['suppid']) && !isset($_GET['modifyid'])){
                     /* sinon on affiche toutes les informations de la galerie */
-                    $req = $bdd->query("SELECT * FROM galerie");
+                    $req = $bdd->query("SELECT galerie.*,personnages.name FROM galerie INNER JOIN personnages ON galerie.idPerso=personnages.id");
                     while($don = $req->fetch())
                     {
                         echo "<tr>";
                             echo "<td>".$don['id']."</td>";
-                            echo "<td>".$don['idPerso']."</td>";
+                            echo "<td>".$don['name']."</td>";
                             echo "<td>";
                                 echo "<a href='updateGalerie.php?id=".$don['id']."' class='btn btn-warning my-2 mx-2'>Modifier</a>";
                                 echo "<a href='galerie.php?delete=".$don['id']."' class='btn btn-danger my-2 mx-2'>Supprimer</a>";

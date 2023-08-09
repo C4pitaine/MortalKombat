@@ -19,6 +19,11 @@
 <body>
     <div class="container">
        <h2>Ajouter un personnage</h2>
+       <?php
+            if(isset($_GET['error'])){
+                echo "<div class='alert alert-danger'>Veuillez remplir tout les champs</div>";
+            }
+       ?>
        <form action="treatmentAddPerso.php" method="POST" enctype="multipart/form-data">
             <div class="form-group my-3">
                 <label for="name">Nom: </label>

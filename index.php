@@ -113,6 +113,14 @@
                         <input type="submit" value="Envoyer">
                     </div>
                 </form>
+                <?php
+                    if(isset($_GET['sendsuccess'])){
+                        echo "<div class='sendsuccess'>Envoi réussi</div>";
+                    }
+                    if(isset($_GET['sendfail'])){
+                        echo "<div class='sendfail'>Veuillez remplir le formulaire correctement</div>";
+                    }
+                ?>
             </div>
         </div>
         <div class="gifA"></div>

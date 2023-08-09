@@ -23,14 +23,14 @@
     }
     $req->closeCursor();
 
-    if(isset($_POST['idPerso']))
+    if(isset($_POST['name']))
     {
         $err = 0;
-        if(empty($_POST['idPerso']))
+        if(empty($_POST['name']))
         {
             $err = 1;
         }else{
-            $idperso = htmlspecialchars($_POST['idPerso']);
+            $idperso = htmlspecialchars($_POST['name']);
         }
 
         if($err == 0)

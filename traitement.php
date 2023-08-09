@@ -37,11 +37,11 @@
             $insert = $bdd->prepare("INSERT INTO contact(name,firstname,email,message) VALUES(?,?,?,?)");
             $insert->execute([$nom,$prenom,$email,$message]);
             $insert->closeCursor();
-            header("LOCATION:index.php");
+            header("LOCATION:index.php?sendsuccess#contact");
         }else{
-            header("LOCATION:index.php#contact");
+            header("LOCATION:index.php?sendfail#contact");
         }
     }else{
-        header("LOCATION:index.php#contact");
+        header("LOCATION:index.php?sendfail#contact");
     }
 ?>
